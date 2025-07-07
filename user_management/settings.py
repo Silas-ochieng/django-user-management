@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
-    'django-user-management-2.onrender.com'
+    'django-user-management-2'
 ]
 
 
