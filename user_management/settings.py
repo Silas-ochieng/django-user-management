@@ -27,11 +27,11 @@ SECRET_KEY = 'django-insecure-yli)^eq#gja6p)%yx_^7dwx5v&=0q(f@blin!ugnb-%5benk%$
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'user-management-system-5xyr.onrender.com',
-    'www.user-management-system-5xyr.onrender.com',  # Add if needed
+    '127.0.0.1',
     'localhost',
-    '127.0.0.1'
+    'user-management-system-5xyr.onrender.com',
 ]
+
 # Application definition
 
 INSTALLED_APPS = [
