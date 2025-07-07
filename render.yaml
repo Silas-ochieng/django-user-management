@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: django-user-management
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn yourprojectname.wsgi:application"
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: yourprojectname.settings
+      - key: SECRET_KEY
+        value: your-secret-key
+      - key: DEBUG
+        value: "False"
