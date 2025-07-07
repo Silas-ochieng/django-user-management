@@ -30,7 +30,9 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
     'user-management-system-5xyr.onrender.com',
+    'django-user-management-1.onrender.com',  # ← Add this line
 ]
+
 
 # Application definition
 
