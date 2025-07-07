@@ -1,0 +1,84 @@
+{% extends 'accounts/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3><i class="bi bi-person-gear me-2"></i>Update Profile</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <!-- Profile Picture Column -->
+                            <div class="col-md-4 text-center">
+                                <div class="mb-3">
+                                    {% if user.profile_picture %}
+                                        <img src="{{ user.profile_picture.url }}" 
+                                             class="img-thumbnail rounded-circle mb-3" 
+                                             style="width: 150px; height: 150px; object-fit: cover;"
+                                             alt="Current profile picture"
+                                             id="profile-picture-preview">
+                                    {% else %}
+                                        <div class="rounded-circle bg-secondary mb-3" 
+                                             style="width: 150px; height: 150px; display: inline-block;"
+                                             id="profile-picture-preview"></div>
+                                    {% endif %}
+                                    {{ form.profile_picture }}
+                                </div>
+                            </div>
+                            
+                            <!-- Form Fields Column -->
+                            <div class="col-md-8">
+                                {{ form.username|as_crispy_field }}
+                                {{ form.email|as_crispy_field }}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {{ form.first_name|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form.last_name|as_crispy_field }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-primary me-2">
+                                <i class="bi bi-save"></i> Save Changes
+                            </button>
+                            <a href="{% url 'profile' %}" class="btn btn-outline-secondary">
+                                <i class="bi bi-x-circle"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Preview image before upload
+    document.getElementById('id_profile_picture').addEventListener('change', function(event) {
+        const preview = document.getElementById('profile-picture-preview');
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+            preview.classList.remove('bg-secondary');
+            preview.classList.add('img-thumbnail');
+        }
+        
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+{% endblock %}
