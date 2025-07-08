@@ -20,7 +20,7 @@ cd django-user-management
 -**Django 3.2+
 - **Python 3.10 or higher**
 
-# Create virtual environment (Python 3.9 example)
+# Create virtual environment 
 python3.9 -m venv venv
 
 # Activate environment
