@@ -26,12 +26,7 @@ SECRET_KEY = 'django-insecure-yli)^eq#gja6p)%yx_^7dwx5v&=0q(f@blin!ugnb-%5benk%$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'localhost',
-    'django-user-management-2'
-]
-
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'django-user-management-2.onrender.com']
 
 
 # Application definition
@@ -150,6 +145,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
  
-ALLOWED_HOSTS = ['your-app-name.onrender.com']
+# Static files settings for production
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
