@@ -24,6 +24,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('accounts.urls')),
     path('', views.landing, name='landing'),
     path('verify-email/<int:user_id>/<uuid:token>/', views.verify_email, name='verify-email'),
     path('resend-verification/', views.resend_verification, name='resend-verification'),
