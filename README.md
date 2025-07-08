@@ -1,6 +1,6 @@
 # Django User Management System
 
-A complete user management system with registration, verification, profile management, and admin features.
+A  user management system with registration, verification, profile management, and admin features.
 
 ## Features
 
