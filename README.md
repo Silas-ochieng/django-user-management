@@ -11,11 +11,21 @@ A complete user management system with registration, verification, profile manag
 - Admin user management
 
 ## Installation
-
-1. Clone the repository:
+1.Ensure you have Django installed
+2. Clone the repository:
 ```bash
 git clone https://github.com/yourusername/django-user-management.git
 cd django-user-management
+3.Dependencies
+-**Django 3.2+
+- **Python 3.10 or higher**
 
+# Create virtual environment (Python 3.9 example)
+python3.9 -m venv venv
 
+# Activate environment
+source venv/bin/activate  # Linux/Mac
+venv\Scripts\activate     # Windows
 
+# Install requirements
+pip install -r requirements.txt
