@@ -19,8 +19,18 @@
                 </div>
             </div>
 
+            <!-- Success Message Display -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
             <div class="row justify-content-center">
-                <div class="col-lg-8">
+                <div class="col-lg-6">  <!-- Reduced width for better form focus -->
                     <div class="card shadow">
                         <div class="card-header bg-primary text-white">
                             <h3 class="h4 mb-0">
@@ -31,65 +41,47 @@
                             <form method="POST" class="needs-validation" novalidate>
                                 {% csrf_token %}
                                 
-                                {% if form.non_field_errors %}
-                                    <div class="alert alert-danger">
-                                        {% for error in form.non_field_errors %}
-                                            {{ error }}
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
+                                <!-- Form Error Display -->
+                                {% if form.errors %}
+                                  <div class="alert alert-danger">
+                                      <strong>Please correct these errors:</strong>
+                                      <ul class="mb-0">
+                                          {% for field, errors in form.errors.items %}
+                                              {% for error in errors %}
+                                                  <li>
+                                                      {% if field != '__all__' %}
+                                                          <strong>{{ field|title }}:</strong>
+                                                      {% endif %}
+                                                      {{ error }}
+                                                  </li>
+                                              {% endfor %}
+                                          {% endfor %}
+                                                 </ul>
+                                 </div>
+                                 {% endif %}
                                 
-                                <div class="row g-3">
-                                    {% if 'username' in form.fields %}
-                                    <div class="col-md-6">
-                                        {{ form.username|as_crispy_field }}
-                                    </div>
-                                    {% endif %}
-                                    
-                                    {% if 'email' in form.fields %}
-                                    <div class="col-md-6">
-                                        {{ form.email|as_crispy_field }}
-                                    </div>
-                                    {% endif %}
-                                    
-                                    {% if 'first_name' in form.fields %}
-                                    <div class="col-md-6">
-                                        {{ form.first_name|as_crispy_field }}
-                                    </div>
-                                    {% endif %}
-                                    
-                                    {% if 'last_name' in form.fields %}
-                                    <div class="col-md-6">
-                                        {{ form.last_name|as_crispy_field }}
-                                    </div>
-                                    {% endif %}
-                                    
-                                    {% if 'password1' in form.fields %}
-                                    <div class="col-md-6">
-                                        {{ form.password1|as_crispy_field }}
-                                    </div>
-                                    {% endif %}
-                                    
-                                    {% if 'password2' in form.fields %}
-                                    <div class="col-md-6">
-                                        {{ form.password2|as_crispy_field }}
-                                    </div>
-                                    {% endif %}
-                                    
-                                    {% if 'user_type' in form.fields %}
-                                    <div class="col-12">
-                                        {{ form.user_type|as_crispy_field }}
-                                        <small class="text-muted">Select "Admin" or "Manager" only if you have authorization.</small>
-                                    </div>
-                                    {% endif %}
+                                <div class="mb-3">
+                                    {{ form.username|as_crispy_field }}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    {{ form.email|as_crispy_field }}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    {{ form.password1|as_crispy_field }}
+                                </div>
+                                
+                                <div class="mb-4">
+                                    {{ form.password2|as_crispy_field }}
                                 </div>
 
-                                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                                    <button type="reset" class="btn btn-outline-secondary me-md-2">
-                                        <i class="bi bi-x-circle me-1"></i> Clear Form
-                                    </button>
-                                    <button type="submit" class="btn btn-primary">
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-primary btn-lg">
                                         <i class="bi bi-person-plus me-1"></i> Register
+                                    </button>
+                                    <button type="reset" class="btn btn-outline-secondary">
+                                        <i class="bi bi-x-circle me-1"></i> Clear Form
                                     </button>
                                 </div>
                             </form>
@@ -106,48 +98,90 @@
 </div>
 
 <style>
-    /* Custom form styling */
+    /* Form Styling */
     .card {
         border-radius: 10px;
+        border: none;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
     }
     
     .card-header {
         border-radius: 10px 10px 0 0 !important;
+        padding: 1.25rem 1.5rem;
     }
     
-    /* Make form inputs match the design system */
+    /* Form inputs */
+    .form-control {
+        padding: 0.75rem 1rem;
+    }
+    
     .form-control:focus {
         border-color: #86b7fe;
         box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
     }
     
-    /* Style the user type select field */
-    select[name="user_type"] {
-        padding: 0.375rem 0.75rem;
-        border-radius: 0.375rem;
-        border: 1px solid #ced4da;
+    /* Error states */
+    .is-invalid {
+        border-color: #dc3545 !important;
+    }
+    
+    .invalid-feedback {
+        display: block;
+        color: #dc3545;
+        font-size: 0.875em;
+        margin-top: 0.25rem;
+    }
+    
+    /* Submit button */
+    .btn-primary {
+        background-color: #0d6efd;
+        border: none;
+        padding: 0.75rem;
+        font-weight: 500;
+    }
+    
+    /* Alert styling */
+    .alert {
+        border-radius: 0.5rem;
     }
 </style>
 
 <script>
-    // Client-side form validation
-    (function() {
-        'use strict'
+    // Enhanced form validation
+    document.addEventListener('DOMContentLoaded', function() {
+        const forms = document.querySelectorAll('.needs-validation');
         
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        const forms = document.querySelectorAll('.needs-validation')
-        
-        // Loop over them and prevent submission
-        Array.from(forms).forEach(form => {
-            form.addEventListener('submit', event => {
+        forms.forEach(form => {
+            // Remove validation on reset
+            form.querySelector('button[type="reset"]')?.addEventListener('click', function() {
+                form.classList.remove('was-validated');
+            });
+            
+            // Validate on submit
+            form.addEventListener('submit', function(event) {
+                form.classList.remove('was-validated');
+                
                 if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
+                    event.preventDefault();
+                    event.stopPropagation();
                 }
                 
-                form.classList.add('was-validated')
-            }, false)
-        })
-    })()
+                if (!form.querySelector('.alert-danger')) {
+                    form.classList.add('was-validated');
+                }
+            }, false);
+        });
+        
+        // Add live validation as users type
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('input', function() {
+                this.classList.remove('is-invalid');
+                const feedback = this.nextElementSibling;
+                if (feedback && feedback.classList.contains('invalid-feedback')) {
+                    feedback.textContent = '';
+                }
+            });
+        });
+    });
 </script>
 {% endblock %}

@@ -1,0 +1,8 @@
+Hi,
+
+Please verify your email by clicking this link:
+
+{{ verification_url }}
+
+Thanks,
+Silas management team
